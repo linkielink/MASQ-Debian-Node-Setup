@@ -3,13 +3,16 @@
 ## 1.	Setting up the HomeServer
 If you never setup a debian HomeServer before, I would recommend using this step by step tutorial: https://www.youtube.com/watch?v=aJuX9c4DCRo 
 
+
 ## 2.	De-Occupping Port 80
 The MASQ Node will need to use the Port 80. As I have a **munin** status monitor running for my home server, I decided to move it off of Port 80 to Port 8080. With that the only difference going forward for me is, that I need to add :8080 to the IP address of my HomeServer, whenever I want to access the munin dashboard (e.g: 192.168.x.x:8080/munin).
+
 
 ## 3.	Creating the Port Forwarding Rules
 I daisychained two routers in my network. Because of that I have to create two port forwardings for the MASQ Node.
 I chose Port 8091 (this is the unofficial CouchBase administration port, that I never use).
 I set up a first Port forwarding for port 8091 from my “public” router (Telekom, that connects to the internet) to my private router (ASUS RT-AX88U that is permanently connected with a PIA VPN). After that I set up the same Port forwarding for Port 8091 inside the ASUS Router to my HomeServer.
+
 
 ## 4.	Getting tMASQ and Mumbai testnet MATIC
 I added the Mumbai Testnet to my Metamask. If you’re unsure how to add Mumbai to Metamask I recommend reading this wiki by Polygon: https://wiki.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/
@@ -24,15 +27,18 @@ Token Decimal: 18
 ```
 I kept those tokens for later to send them over to the MASQ Node Wallets
 
+
 ## 5.	Getting a Descriptor
 To make the MASQ node working you will need add a descriptor to your node. You will need to have access to a specific channel in the MASQ discord, the Moderators will help you with that as well.
 You will be presented to a channel, with a list of public nodes. Copy one of those and use it. Later you’ll be able to get your own descriptor by using the masq cli.
 
 _TIPP: use two descriptors initially (separated with a comma – no space)_
 
-## 6.	Getting your HomeServer’s external public IP
+
+## 6.Getting your HomeServer’s external public IP
 If you want to know what your external IP address is, just connect to your HomeServer and use this command:
 `dig +short txt ch whoami.cloudflare @1.0.0.1`
+
 
 ## 7.	Getting a RPC endpoint
 You will need a rpc endpoint to run your node. https://alchemy.com is a good place to get it. Sign up for free and create a new app on Polygon Mumbai.
@@ -87,6 +93,7 @@ PermitRootLogin no
 
 Restart the ssh service
 `sudo service ssh restart`
+
 
 ## 9.	Setting up the MASQ Node
 Are you still logged in as masqnode? Yes? Good. If not, do so now.
@@ -185,6 +192,7 @@ real-user = "1001:1001:/home/masqnode"
 neighbors = "masq://polygon-mumbai:4b3lJZIvs9f4AeHV2rGPKBL03kiH-b-QSkxCkQYxwEk@45.77.61.140:6421,masq://polygon-mumbai:19f2j5hCmxenhx95P7hNxHAlYjeNBBw3n4ZyurZr2VI@155.138.231.133:39603"
 ```
 
+
 ## 10.	Starting the node for the first time
 
 Start a node in zero-hop mode
@@ -215,12 +223,14 @@ Add the parameter db-password
 db-password = "[PASSWORD]"
 ```
 
+
 ## 11.	Start Your node
 
 Start the node
 `sudo ./MASQNode --data-directory /home/masqnode/node --config-file /home/masqnode/node/config.toml`
 
 **Press Ctr + c to stop the node running**
+
 
 ## 12.	Setting up screen to keep the node running
 To keep the node running in the background of your server, just use the previously installed screen package.
