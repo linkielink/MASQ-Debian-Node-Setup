@@ -342,7 +342,7 @@ screen -S masq
 And start the node again
 
 ```
-sudo ./MASQNode --data-directory /home/masqnode/node --config-file /home/masqnode/node/config.toml`
+sudo ./MASQNode --data-directory /home/masqnode/node --config-file /home/masqnode/node/config.toml
 ```
 
 **To exit the screen press Ctrl + a + d**
@@ -375,3 +375,82 @@ scp /[LOCAL_FOLDER]/MASQNode masqnode@[IP_ADDRESS_OF_YOUR_NODE]:"node/MASQNode"
 ```
 
 Enter the password for your masqnode user and it will upload and override the file from your local system on your node.
+
+After that login via ssh and run
+
+```
+cd node
+```
+
+and
+
+```
+sudo chmod +x *
+```
+
+To make the binaries executable again.
+
+## Delete the existing Database
+
+Delete the Database by running
+
+```
+rm node-data.db
+```
+
+## Clearing the data-directory
+
+Now you have to clear the `data-directory`, to find the path to the directory, open a new terminal and connect to your node via ssh.
+Navigate to the node folder
+
+```
+cd node
+```
+
+and run the MASQNode Deamon in initialization mode
+
+```
+sudo ./MASQNode --initialization
+```
+
+Leave this terminal open and go back to your initial terminal window where you are located in the `node` folder and run the `masq setup` CLI.
+
+```
+./masq setup
+```
+
+Check the value of your `data-directory` and navigate to the folder
+
+```
+cd [PATH_OF_data-directory]
+```
+
+If you're told that you `can't cd to [PATH_OF_data-directory]` then give the folder the needed permission
+
+```
+sudo chmod o+x [PATH_OF_data-directory]
+```
+
+Now remove the contents of the folder.
+
+## Recover your wallets
+
+Because we deleted the Database file, we need to recover the nodes wallets. Start the masq CLI again
+
+```
+./masq
+```
+
+Set the same database password, you set in step 10
+
+```
+set-password [PASSWORD]
+```
+
+And restore your wallets with the data you stored somewhere safe in step 10
+
+```
+recover-wallets --db-password [PASSWORD] --consuming-key [PRIVATE_KEY_OF_CONSUMING_WALLET] --earning-address [WALLET_ADDRESS_OF_EARNING_WALLET]
+```
+
+Now you Node is updated and you should be able to start it regularly again.
