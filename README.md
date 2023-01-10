@@ -40,7 +40,10 @@ _TIPP: use two descriptors initially (separated with a comma – no space)_
 ## 6.Getting your HomeServer’s external public IP
 
 If you want to know what your external IP address is, just connect to your HomeServer and use this command:
-`dig +short txt ch whoami.cloudflare @1.0.0.1`
+
+```
+dig +short txt ch whoami.cloudflare @1.0.0.1
+```
 
 ## 7. Getting a RPC endpoint
 
@@ -54,38 +57,71 @@ Ready? Let’s go. This was also a first for me, that’s why I walk you through
 _I used Stephan’s video tutorial (https://www.youtube.com/watch?v=JrKSfwDA334)l for the following steps, you should be fine by just following and copying whatever commands you see listed below._
 
 I connected to my HomeServer by opening a ssh connection
-`ssh [username]@192.168.x.x `
+
+```
+ssh [username]@192.168.x.x
+```
 
 After logining in with my password, I switched to the root user
-`su`
+
+```
+su
+```
 
 Update your apt packages
-`apt update`
-`apt upgrade`
+
+```
+apt update
+```
+
+```
+apt upgrade
+```
 
 Install the sudo, screen and unzip package
 apt install sudo screen unzip
 
 Add a new user named masqnode
-`useradd -m masqnode`
+
+```
+useradd -m masqnode
+```
 
 And add it to the sudo group
-`usermod -aG sudo masqnode`
+
+```
+usermod -aG sudo masqnode
+```
 
 Give the user a password
-`passwd masqnode `
+
+```
+passwd masqnode
+```
 
 Now exit the root user
-`exit`
+
+```
+exit
+```
 
 And exit the server entirely
-`exit`
+
+```
+exit
+```
 
 Reconnect to the server with the new user
-`ssh masqnode@192.168.x.x `
+
+```
+ssh masqnode@192.168.x.x
+```
 
 To secure your server and permit root login open the sshd_config file
-`sudo nano /etc/ssh/sshd_config`
+
+```
+sudo nano /etc/ssh/sshd_config
+```
 
 Remove the # infront of PermitRootLogin and set the value to no
 
@@ -96,7 +132,10 @@ PermitRootLogin no
 **Press Ctrl + o, press Enter and press Ctr + x to exit the editor**
 
 Restart the ssh service
-`sudo service ssh restart`
+
+```
+sudo service ssh restart
+```
 
 ## 9. Setting up the MASQ Node
 
@@ -107,28 +146,52 @@ Copy the link of the Node-[version]-linux.zip file by right clicking and selecti
 **NOTE: Currently only v0.6.2 can be installed on debian - ask in the Discord for help if you need the binaries for v0.7.0 or higher**
 
 Get back to the server and create a folder called node
-`mkdir node`
+
+```
+mkdir node
+```
 
 And navigate to it
-`cd node`
+
+```
+cd node
+```
 
 Download the binary to your HomeServer
-`wget https://github.com/MASQ-Project/Node/releases/download/v0.6.2/Node-0.6.2-linux.zip`
+
+```
+wget https://github.com/MASQ-Project/Node/releases/download/v0.6.2/Node-0.6.2-linux.zip
+```
 
 Unzip the package
-`unzip Node-0.6.2-linux.zip`
+
+```
+unzip Node-0.6.2-linux.zip
+```
 
 Delete the zip file
-`rm Node-0.6.2-linux.zip`
+
+```
+rm Node-0.6.2-linux.zip
+```
 
 Make the files executable
-`sudo chmod +x *`
+
+```
+sudo chmod +x *
+```
 
 Get your user and group id (and copy them to a file to use them later)
-`id`
+
+```
+id
+```
 
 Create a file called config
-`nano config.toml`
+
+```
+nano config.toml
+```
 
 Copy the rpc endpoint you generated in step 8 and insert it as blockchain-service-url
 
@@ -210,27 +273,45 @@ neighbors = "masq://polygon-mumbai:4b3lJZIvs9f4AeHV2rGPKBL03kiH-b-QSkxCkQYxwEk@4
 ## 10. Starting the node for the first time
 
 Start a node in zero-hop mode
-`sudo ./MASQNode --neighborhood-mode zero-hop --data-directory /home/masqnode/node`
+
+```
+sudo ./MASQNode --neighborhood-mode zero-hop --data-directory /home/masqnode/node
+```
 
 Open another shell terminal and keep the previous one open.
 Navigate to the node folder
-`cd node`
+
+```
+cd node
+```
 
 Start the masq CLI
-`./masq`
+
+```
+./masq
+```
 
 Create a password, save it somewhere safe and set it as the database password
-`set-password [PASSWORD]`
+
+```
+set-password [PASSWORD]
+```
 
 Generate wallets and save the seed phrase informations you get somewhere safe
-`generate-wallets –db-password [PASSWORD]`
+
+```
+generate-wallets –db-password [PASSWORD]
+```
 
 **Exit the masq CLI with Ctr + c**
 
 **Switch to the previous Terminal and press Ctr + c again**
 
 Open the config.toml in an editor
-`nano config.toml`
+
+```
+nano config.toml
+```
 
 Add the parameter db-password
 
@@ -241,7 +322,10 @@ db-password = "[PASSWORD]"
 ## 11. Start Your node
 
 Start the node
-`sudo ./MASQNode --data-directory /home/masqnode/node --config-file /home/masqnode/node/config.toml`
+
+```
+sudo ./MASQNode --data-directory /home/masqnode/node --config-file /home/masqnode/node/config.toml
+```
 
 **Press Ctr + c to stop the node running**
 
@@ -250,14 +334,24 @@ Start the node
 To keep the node running in the background of your server, just use the previously installed screen package.
 
 Create a new screen
-`screen -S masq`
+
+```
+screen -S masq
+```
 
 And start the node again
-`sudo ./MASQNode --data-directory /home/masqnode/node --config-file /home/masqnode/node/config.toml``
+
+```
+sudo ./MASQNode --data-directory /home/masqnode/node --config-file /home/masqnode/node/config.toml`
+```
 
 **To exit the screen press Ctrl + a + d**
 
-To resume the screen with the running node run `screen -r masq`
+To resume the screen with the running node run
+
+```
+screen -r masq
+```
 
 **To kill the screen press Ctrl + k**
 
@@ -269,7 +363,15 @@ If a new version of the MASQ Node binaries is released I replace my node install
 
 However, if you only need to replace the masq and MASQNode binary because the linux installer of newer versions doesn't work with Debian.
 Here's are two quick commands to do so
-`scp /[LOCAL_FOLDER]/masq masqnode@[IP_ADDRESS_OF_YOUR_NODE]:"node/masq"`
+
+```
+scp /[LOCAL_FOLDER]/masq masqnode@[IP_ADDRESS_OF_YOUR_NODE]:"node/masq"
+```
+
 and
-`scp /[LOCAL_FOLDER]/MASQNode masqnode@[IP_ADDRESS_OF_YOUR_NODE]:"node/MASQNode"`
+
+```
+scp /[LOCAL_FOLDER]/MASQNode masqnode@[IP_ADDRESS_OF_YOUR_NODE]:"node/MASQNode"
+```
+
 Enter the password for your masqnode user and it will upload and override the file from your local system on your node.
