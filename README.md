@@ -247,7 +247,7 @@ Set the Real User consisting of user id, group id and home directory.
 real-user = "1001:1001:/home/masqnode"
 ```
 
-Set the neighbors by using the descriptors you got in step 6
+Set the neighbors by using the descriptors you got in step 5
 
 ```
 neighbors = "masq://polygon-mumbai:4b3lJZIvs9f4AeHV2rGPKBL03kiH-b-QSkxCkQYxwEk@45.77.61.140:6421,masq://polygon-mumbai:19f2j5hCmxenhx95P7hNxHAlYjeNBBw3n4ZyurZr2VI@155.138.231.133:39603"
