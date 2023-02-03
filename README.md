@@ -62,7 +62,7 @@ I connected to my HomeServer by opening a ssh connection
 ssh [username]@192.168.x.x
 ```
 
-After logining in with my password, I switched to the root user
+After logging in with my password, I switched to the root user
 
 ```
 su
@@ -79,7 +79,10 @@ apt upgrade
 ```
 
 Install the sudo, screen and unzip package
+
+```
 apt install sudo screen unzip
+```
 
 Add a new user named masqnode
 
@@ -129,7 +132,7 @@ Remove the # infront of PermitRootLogin and set the value to no
 PermitRootLogin no
 ```
 
-**Press Ctrl + o, press Enter and press Ctr + x to exit the editor**
+**Press Ctrl + o, press Enter and press Ctrl + x to exit the editor**
 
 Restart the ssh service
 
@@ -303,9 +306,9 @@ Generate wallets and save the seed phrase informations you get somewhere safe
 generate-wallets –db-password [PASSWORD]
 ```
 
-**Exit the masq CLI with Ctr + c**
+**Exit the masq CLI with Ctrl + c**
 
-**Switch to the previous Terminal and press Ctr + c again**
+**Switch to the previous Terminal and press Ctrl + c again**
 
 Open the config.toml in an editor
 
@@ -327,7 +330,7 @@ Start the node
 sudo ./MASQNode --data-directory /home/masqnode/node --config-file /home/masqnode/node/config.toml
 ```
 
-**Press Ctr + c to stop the node running**
+**Press Ctrl + c to stop the node running**
 
 ## 12. Setting up screen to keep the node running
 
